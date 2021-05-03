@@ -13,70 +13,128 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm//vega-embed@6"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,300&family=Prompt:wght@300&display=swap" rel="stylesheet">
     <style>
-      body, html {
-        font-family: 'Questrial', sans-serif;
+      html {
+        scroll-behavior: smooth;
+      }
+      body, html, p {
+        font-family: 'Questrial', prompt, sans-serif;
         margin: 0;
       }
-      .title-section, .data-section {
+      a {
+        text-decoration: none;
+      }
+      h1{
+        color: #000;
+        margin: 0;
+        text-align: center;
+        font-size: 72px;
+        line-height: 72px;
+        color: #FFF;
+        letter-spacing: 5px;
+      }
+      .title-section h2{
+        font-size: 60px;
+        color: #3f20f3;
+        text-decoration: underline;
+      }
+      h2{
+        color: #000;
+        font-size: 50px;
+        line-height: 48px;
+      }
+      h3{
+      color: rgb(44, 31, 114);
+      text-align: left;
+    }
+      .title-section, .data-section, .ending {
         display: flex;
         flex-flow: column;
         min-height: 100vh;
         padding: 0 70px;
       }
+      .title-section {
+        background-image: url("./assets/bg1.png");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .title-section .desc {
+        display: flex;
+        justify-content: center;
+        align-items:center;
+      }
+      .title-section .desc img {
+        width:130px;
+      }
+      .title-section .desc p {
+        color: #FFF;
+      }
       .data-section {
         justify-content: center;
-      }
-      .title-section .img-bg {
-        position: absolute;
-        max-height: 100vh;
-        width: 100vw;
-        z-index: -1;
-        object-fit: cover;
-        top: 0;
-        left: 0;
       }
       .top {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-top: 20px;
+        padding-top: 22px;
+        color: #FFF;
+        font-family: 'Open Sans', sans-serif;
+        letter-spacing: 2px;
       }
       .title-section .top span {
         font-size: 14px;
       }
       .title-section .middle {
-        display: flex;
-        align-items: center;
         flex-grow: 1;
       }
-      .title-section .des {
-        position: absolute;
-        bottom: 10%;
-        right: 70px;
-        font-weight: 400;
+      .data-section p {
+        margin-right: 200px;
         font-size: 20px;
-        line-height: 18px;
+        letter-spacing: 2px;
       }
-      .title-section .des > div {
+      .title-section.secondary {
+        background-image: url("./assets/bg2.png");
+        min-height: 90vh;
+        justify-content: flex-end;
+      }
+      .title-section.secondary p {
+        text-align: center;
+        font-size: 22px;
+      }
+      .title-section.secondary img {
+        width:200px;
+      }
+      .vega-bindings {
+        position: absolute;
+        top: 0;
+      }
+      .center {
         display: flex;
-        flex-flow: column;
-        justify-content: cetner;
+        justify-content: center;
         align-items: center;
       }
-      .title-section .des img {
-        width: 12vh;
-        margin-top: 15px;
+      .chart1 {
+        flex-flow: column;
       }
-      p {
-        margin-right: 200px;
+      .chart1 .desc {
+        align-items: center;
       }
-      .chart2, .chart3 {
-        display: flex;
-        justify-content: space-between;
+      .chart1 p {
+        margin-left: 250px;
       }
       .chart2 p {
-        margin-top: 20vh;
+        margin-top: 100px;
+      }
+      .chart2 .desc {
+        margin-left: 100px;
+      }
+      .chart3 { 
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
       }
       .chart3 p {
         margin-top: 10vh;
@@ -84,24 +142,35 @@
       #vis2 {
         padding-left: 90px;
       }
-      h1{
-        color: #000;
-        margin: 0;
-        text-align: start;
-        font-family: 'Krona One';
-        font-size: 72px;
-        line-height: 72px;
-    }
-      h2{
-      color: #000;
-      font-family: 'Krona One';
-      font-size: 50px;
-      line-height: 48px;
-    }
-      h3{
-      color: rgb(44, 31, 114);
-      text-align: left;
-    }
+      #vis3 {
+        margin-right: 80px;
+      }
+      #vis3 canvas {
+        margin-top: 50px;
+      }
+      .ending {
+        background-image: url("./assets/bg-end.png");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+      }
+      .ending #p1 {
+        font-size: 22px;
+        color: #d13fd6;
+      }
+      .ending #p2 {
+        margin-top: 20px;
+        font-size: 60px;
+      }
+      .ending a{
+        font-size: 32px;
+        text-decoration: underline;
+        position: absolute;
+        bottom: 10px;
+        color: #f4592f;
+      }
+      
     .boxchart1 {
       display: flex;
       justify-content: center;
@@ -130,44 +199,63 @@
   </head>
 <body>
   <div class="box1">
-    <div class="title-section">
-      <img class="img-bg" src="./assets/bg1.png"/>
+    <div class="title-section" id="top">
       <div class="top">
         <span>influencer</span>
         <span>data</span>
         <span>visualization</span>
       </div>
-      <div class="middle">
-        <h1>Influencer<br/> for each <br/> Platform</h1><br>
+      <div class="middle center">
+        <h1>Influencer<br/>in Each Platform</h1><br>
       </div>
-      <div class="des">
-        <div>
-          <p>
-          Visualization below <br/>
-          overall description <br/>
-          (optional)
-          </p>
-        <img src="./assets/down-arrow.svg"/>
-      </div>
-      </div>
+      <a href="#01" class="desc">
+        <img src="./assets/arr2.png" />
+        <p>
+        See the <br/>
+        visualization
+        </p>
+      </a>
+    </div>
+    <div class="title-section secondary center" id="01">
+      <h2>01</h2>
+      <p>กราฟแสดงยอด engagement <br/> 
+        รวมทุก platform แบ่งตาม category <br/>
+        ของ content ทั้ง 4 ไตรมาส</p>
+      <img src="./assets/arr1.png" />
     </div>
     <div class="data-section">
-      <div class="top">
-        <h2>Chart1 <br> Name</h2>
-        <p>Description <br> <span class="green">green</span> #62e585 <span class="pink">pink</span> #f2d4de <br> navy #1e2856</p>
-      </div>
-      <div class="boxchart1">
-        <div id="vis1" ></div>
+      <div class="chart1 ">
+        <div class="desc center">
+          <h2>Chart1 <br> Name</h2>
+          <p>Description <br> <span class="green">green</span> #62e585 <span class="pink">pink</span> #f2d4de <br> navy #1e2856</p>
+        </div>
+        <div class="boxchart1">
+          <div id="vis1" ></div>
+        </div>
       </div>
     </div>
+    <div class="title-section secondary center">
+      <h2>01</h2>
+      <p>กราฟแสดงยอด engagement <br/> 
+        รวมทุก platform แบ่งตาม category <br/>
+        ของ content ทั้ง 4 ไตรมาส</p>
+      <img src="./assets/arr1.png" />
+    </div>
     <div class="data-section">
-      <div class="chart2">
+      <div class="chart2 center">
         <div id="vis2"></div>
-        <div>
+        <di class="desc">
           <h2>Chart2 <br> Name</h2>
           <p>Description <br> <span class="green">green</span> #62e585 <span class="pink">pink</span> #f2d4de <br> navy #1e2856</p>
         </div>
       </div>
+    </div>
+    <div class="title-section secondary center">
+      <h2>01</h2>
+      <p>กราฟแสดงยอด engagement <br/> 
+        รวมทุก platform แบ่งตาม category <br/>
+        ของ content ทั้ง 4 ไตรมาส</p>
+      <img src="./assets/arr1.png" />
     </div>
     <div class="data-section">
       <div class="chart3">
@@ -178,7 +266,11 @@
         <div id="vis3"></div>
       </div>
     </div>
-    
+    <div class="ending center">
+      <p id="p1">Thas'all</p>
+      <p id="p2">Thank You</p>
+      <a href="#top">Go To Top</a>
+    </div> 
   </div>
   <script>
     (function(vegaEmbed) {
